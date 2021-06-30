@@ -3,6 +3,13 @@ uuid = "041066b3-17c0-4d0d-9509-9cd497d75680"
 authors = ["Haoran-Feng <hrfeng@pmo.ac.cn> and contributors"]
 version = "0.1.0"
 
+[deps]
+FITSIO = "525bcba6-941b-5504-bd06-fd0dc1a4d2eb"
+StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
+Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
+UnitfulAstro = "6112ee07-acf9-5e0f-b108-d242c714bf9f"
+WCS = "15f3aee2-9e10-537f-b834-a6fb8bdb944d"
+
 [compat]
 julia = "1"
 
