@@ -1,6 +1,5 @@
 module RadioAstroTools
 
-using FITSIO: include
 using FITSIO
 using WCS
 using Unitful, UnitfulAstro
@@ -22,11 +21,11 @@ abstract type AbstractMap end
 abstract type AbstractSpectralCube end
 
 include("helpers.jl")
-include("cubes.jl")
-include("maps.jl")
 include("ranges.jl")
 include("io.jl")
 include("WCShelpers.jl")
+include("maps.jl")
+include("cubes.jl")
 include("index_funcs.jl")
 include("mask_funcs.jl")
 
