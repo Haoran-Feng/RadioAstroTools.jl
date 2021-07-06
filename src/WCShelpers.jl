@@ -60,7 +60,7 @@ function parse_fitsheader(header::String)
 end
 
 function header2d_of(cube::AbstractSpectralCube, line::AbstractString, content_description::AbstractString)
-    hkeys, hvalues, comments = MapAndCube.wcs2d_from_header(cube.header) |> WCS.to_header |> MapAndCube.parse_fitsheader
+    hkeys, hvalues, comments = wcs2d_from_header(cube.header) |> WCS.to_header |> parse_fitsheader
     hkeys = ["SIMPLE" ; hkeys; "DATA"; "LINE"]
     hvalues = [true; hvalues; content_description; line];
     comments = [cube.header.comments[1]; comments; ""; ""]

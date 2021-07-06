@@ -95,6 +95,19 @@ function map_to_new_zaxis!(cube1::AbstractSpectralCube, cube2::AbstractSpectralC
     return cube2
 end
 
+function map_to_new_zaxis!(cube::AbstractSpectralCube, new_zaxis::AbstractArray) 
+    # this method will modify cube
+    new_data = zeros(eltype(cube.data), tuple([size(cube.data)[1:2]...,  length(new_zaxis)]...) )
+    for (i, v) in enumerate(new_zaxis)
+        old_i = closest_index(cube.zaxis, v)
+        new_data[:, :, i] = cube.data[:, :, old_i]
+    end
+    # new_data[new_data .== 0] .= NaN;
+    cube.data = new_data;
+    cube.zaxis = new_zaxis
+    return cube
+end
+
 function voxel_num(maskcube::AbstractSpectralCube)
     maskcube.data .|> isnan .|> (!) |> sum
 end
