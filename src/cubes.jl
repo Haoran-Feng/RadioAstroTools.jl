@@ -129,6 +129,12 @@ function valid_map(masked_datacube::SpectralCube, rmsmap::Map; n_sigma=3)
     return vm 
 end
 
+
+function valid_map(spec_filter_func::Function, datacube::AbstractSpectralCube)
+    filtered_data = mapslices(spec_filter_func, datacube.data; dims=[3])
+end
+
+
 function Base.string(cube::SpectralCube)
     # TODO
     return "SpectralCube info"
