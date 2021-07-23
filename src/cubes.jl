@@ -130,8 +130,38 @@ function valid_map(masked_datacube::SpectralCube, rmsmap::Map; n_sigma=3)
 end
 
 
-function valid_map(spec_filter_func::Function, datacube::AbstractSpectralCube)
-    filtered_data = mapslices(spec_filter_func, datacube.data; dims=[3])
+function three_channels_13(spec::Vector, rms::Real)
+    Nσ = 2.0
+    max_idx = argmax(spec)
+    if max_idx >= 2 && max_idx <= (length(spec) - 1)
+        chs = [max_idx - 1, max_idx, max_idx + 1]
+    else
+        for i=1:length(spec) - 2
+            chs = [i, i + 1, i + 2]
+            if all(spec[chs] .>= Nσ * rms)
+                return true
+            end
+        end
+        return false
+    end
+    return all(spec[chs] .>= Nσ * rms)
+end
+
+function three_channels_18(spec::Vector, rms::Real)
+    Nσ = 1.5
+    max_idx = argmax(spec)
+    if max_idx >= 2 && max_idx <= (length(spec) - 1)
+        chs = [max_idx - 1, max_idx, max_idx + 1]
+    else
+        for i=1:length(spec) - 2
+            chs = [i, i + 1, i + 2]
+            if all(spec[chs] .>= Nσ * rms)
+                return true
+            end
+        end
+        return false
+    end
+    return all(spec[chs] .>= Nσ * rms)
 end
 
 
