@@ -16,7 +16,7 @@ end
 
 # --------------------------------------------------
 # Cube functions 
-function spectralcube(data::Array{T, 3} where T <: Real, header::FITSHeader)
+function SpectralCube(data::Array{T, 3} where T <: Real, header::FITSHeader)
     wcs = wcs3d_from_header(header)
 
     idx = zeros((3, size(data, 3)))
@@ -77,8 +77,9 @@ function subcube(cube::SpectralCube, xyz_range::CubeRange)
     header["NAXIS2"] = size(data, 2)
     header["NAXIS3"] = size(data, 3)
                 
-    return spectralcube(data, header)
+    return SpectralCube(data, header)
 end
+
                     
                     
 function map_to_new_zaxis!(cube1::AbstractSpectralCube, cube2::AbstractSpectralCube)
@@ -168,4 +169,8 @@ end
 function Base.string(cube::SpectralCube)
     # TODO
     return "SpectralCube info"
+end
+
+function Base.copy(cube::AbstractSpectralCube)
+    SpectralCube(cube.data, cube.header)
 end
