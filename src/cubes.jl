@@ -171,6 +171,6 @@ function Base.string(cube::SpectralCube)
     return "SpectralCube info"
 end
 
-function Base.copy(cube::AbstractSpectralCube)
+function Base.copy(cube::SpectralCube)
     SpectralCube(cube.data, cube.header)
 end
