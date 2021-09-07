@@ -14,6 +14,7 @@ export read_map_from_file, read_cube_from_file
 export save
 export submap, subcube
 export apply_mask, apply_mask!
+export copy
 
 
 # abstract types
