@@ -2,7 +2,8 @@
 # IO functions 
 
 function read_map_from_file(fitsfilename::String; hdu_id::Int=1)
-    hdu = FITS(fitsfilename)[hdu_id]
+    f = FITS(fitsfilename)
+    hdu = f[hdu_id]
     data = read(hdu);
     header = read_header(hdu);
     wcs = wcs2d_from_header(header)
@@ -20,12 +21,14 @@ function read_map_from_file(fitsfilename::String; hdu_id::Int=1)
     val_unit = u"K";
     
     xy_resolution = abs(x_axis[1] - x_axis[2])
-    
+    close(f)
     return Map(data, val_unit, header, wcs, x_axis, y_axis, xy_unit, xy_resolution);
 end
 
 function read_cube_from_file(fitsfilename::String; hdu_id::Int=1)
-    hdu = FITS(fitsfilename)[hdu_id]
+    f = FITS(fitsfilename)
+    hdu = f[hdu_id]
+    
     if ndims(hdu) == 4
         data = read(hdu, :, :, :, 1);
     else
@@ -60,6 +63,7 @@ function read_cube_from_file(fitsfilename::String; hdu_id::Int=1)
     xy_resolution = abs(header["CDELT1"])
     z_resolution = abs(z_axis[1] - z_axis[2])
     
+    close(f)
     return SpectralCube(data, val_unit, header, wcs, x_axis, y_axis, z_axis, xy_unit, z_unit, xy_resolution, z_resolution);
 end
             
